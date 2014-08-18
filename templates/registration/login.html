@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block login.html %}
+    <div class = 'login_page'>
+        <div id = 'error_line'>
+            {% if error %}
+            <p class="error">
+            مجددا تلاش کنید. نام کاربری یا رمز عبور صحیح نمی باشد.
+            </p>
+            {% endif %}
+
+        </div>
+
+        <div id = 'information'>
+            <form action="/" method="post" name="login"> {% csrf_token %}
+                <p>{{ form.username.label }}    {{ form.username }}</p>
+                <p>{{ form.password.label }}    {{ form.password }}</p>
+                <p><input type="submit" value="ورود" id="login" ></p>
+                <input type="hidden" name="next" value="{{ next}}" />
+            </form>
+            <p>
+            <a href="register/"><button id='signUp'>ثبت نام</button></a>
+        </div>
+
+
+    </div>
+{% endblock %}

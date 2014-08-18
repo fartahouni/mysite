@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load tags %}
+
+{% block sidebar %}
+    <div class = 'user_profile'>
+
+        <div id = 'image'>
+            {%  if profile_image == 'default' %}
+
+                <img  src= "/static/img/pro_img.jpg" style="height: 130px ; width:90px ">
+            {% else %}
+                <img width="100" height="100%" src= {{ profile_image | address }} >
+            {% endif %}
+        </div>
+
+        <div id = 'hello_text'>
+            <p>{{ user.first_name }} {{ user.last_name }}</p>
+            <p>خوش آمدید.</p>
+            <p>
+                <form action="/logout">{% csrf_token %}
+        <input type="submit" value="خروج" id = 'log_out'>
+    </form>
+            </p>
+        </div>
+
+
+    </div>
+
+    <div class = 'sidebar'>
+         <div id = "table">
+             <table cellpadding="10px">
+                 {% for selected_pack in  all_pack %}
+
+
+
+          <tr>
+              <td>
+                  <form action="/{{ selected_pack.id }}/" >{% csrf_token %}
+            <input type="submit" class = "submit_button"  value="{{ selected_pack.title }}">
+                        </form>
+            </td>
+            </tr>
+
+
+    {% endfor %}
+
+             </table>
+
+         </div>
+
+         <div id = "button">
+             <form action="/newPack/" method = 'POST'>{% csrf_token %}
+                 <button>
+
+                        ایجاد یک بسته کاری جدید
+                     </button>
+             </form>
+                </div>
+    </div>
+{% endblock %}
+
+
+{% block eachPack %}
+    <div class = 'Eachpackage'>
+            <div id = 'top'>
+                <table cellpadding="10px" >
+
+                  <tr>
+                        <th>عنوان کار</th>
+                        <th>شروع</th>
+                        <th>پایان</th>
+                        <th>مدت زمان</th>
+                    </tr>
+
+    {% for do in to_dos %}
+        <tr>
+        <td>
+            {{ do.title}}
+        </td>
+        <td>
+            {{ do.start_time }}
+        </td>
+        <td>
+
+
+                {% if do.end_time == None %}
+
+                  <form action="/end{{ do.id }}/" method="post">{% csrf_token %}
+                  <button>اتمام</button>
+
+                {% else %}
+                  <text>{{ do.end_time }}</text>
+                {% endif %}
+                  </form>
+        </td>
+        <td>
+                {% if do.end_time != None %}
+                  {{ do.start_time|sub:do.end_time }}
+                {% endif %}
+        </td>
+        </tr>
+    {% endfor %}
+
+                </table>
+            </div>
+
+            <div id = 'down'>
+                <form action="/add_new_task/" method="post">{% csrf_token %}
+                <input name="task" value="">
+                </form>
+
+            </div>
+        </div>
+{% endblock %}
