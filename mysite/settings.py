@@ -1,5 +1,5 @@
 # Django settings for mysite project.
-
+#test gitX
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
