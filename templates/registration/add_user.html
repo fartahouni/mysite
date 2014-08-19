@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    {% block add_user.html %}
+
+        <div class="register_page">
+
+        <form action="." method="post" id="finish" enctype="multipart/form-data">{% csrf_token %}
+                <table>
+                    {% if form.non_field_errors %}
+                        <div class="form_errors">
+                          {% for err in form.non_field_errors %}
+                            <div class="form_error_message">{{ err }}</div>
+                          {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% for hidden in form.hidden_fields %}
+                           {{ hidden }}
+                    {% endfor %}
+                    {% for field in form.visible_fields %}
+                        {% if field.label == 'image' %}
+                        {% endif %}
+                        <tr>
+                        <div {% if field.errors %}class="field_error"{% endif %}>
+
+                                <td>{{ field.label_tag }}</td>
+                                <td>{{ field }}</td>
+                            {% for err in field.errors %}
+                                <td><span id="error_message">{{ err }}</span></td>
+                            {% endfor %}
+                        </div>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+                <br><br/>
+                    <input type="submit" value="ذخیره" id = 'save'>
+                    <input type="submit" value="بازگشت"name="return" id="return">
+                </form>
+        </div>
+
+
+
+    {% endblock %}
+</body>
+</html>

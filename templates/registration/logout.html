@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    {%  block logout.html %}
+        شما از سیستم خارج شدید.
+    <form action="/" method="post" name="again">{% csrf_token %}
+        <input type="submit" value="ورود مجدد">
+        <input type="hidden" value = 'in' name="vorood">
+    </form>
+    {% endblock %}
+</body>
+</html>
